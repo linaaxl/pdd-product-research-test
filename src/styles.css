@@ -631,10 +631,16 @@ dd {
   padding: 12px;
 }
 
+.compact-summary,
 .quality-decision summary {
   display: grid;
   gap: 4px;
   cursor: pointer;
+}
+
+.compact-summary {
+  grid-template-columns: minmax(0, 1fr);
+  list-style-position: inside;
 }
 
 .quality-decision strong {
@@ -724,8 +730,14 @@ dd {
   padding: 12px;
 }
 
+.offline-panel .compact-summary strong,
 .offline-panel > strong {
   color: #0f172a;
+}
+
+.offline-panel .compact-summary span {
+  color: #64748b;
+  line-height: 1.4;
 }
 
 .offline-grid {

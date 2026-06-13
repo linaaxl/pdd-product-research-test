@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import {
   ProductCategory,
+  ProductIdea,
   SellerMode,
   buildClosedLoopStatus,
   buildFeedback,
@@ -334,15 +335,6 @@ export default function ProductResearchApp() {
                     <span key={reason}>{reason}</span>
                   ))}
                 </div>
-                <div className="quality-grid">
-                  <QualityBlock title="质量好坏看" items={product.qualityChecklist.slice(0, 4)} />
-                  <QualityBlock title="避坑信号" items={product.avoidSignals.slice(0, 3)} warning />
-                </div>
-                <QualityDecisionPanel product={product} guide={buildQualityVerificationGuide(product)} />
-                <p className="procurement">{product.procurementHint}</p>
-                <p className="contact">{product.contactHint}</p>
-                <OfflineContactList contacts={product.offlineContacts} />
-                <ClosedLoopPanel loop={buildClosedLoopStatus(product)} />
                 <div className="action-row">
                   <a href={pddSearchUrl(product.pddQuery)} target="_blank" rel="noreferrer">
                     拼多多售卖比价
@@ -354,6 +346,9 @@ export default function ProductResearchApp() {
                     {selectedIds.includes(product.id) ? '移出测款' : '加入测款'}
                   </button>
                 </div>
+                <QualityDecisionPanel product={product} guide={buildQualityVerificationGuide(product)} />
+                <OfflineSourcingPanel product={product} />
+                <ClosedLoopPanel loop={buildClosedLoopStatus(product)} />
               </article>
             ))}
           </div>
@@ -415,24 +410,21 @@ export default function ProductResearchApp() {
   );
 }
 
-function OfflineContactList({
-  contacts,
+function OfflineSourcingPanel({
+  product,
 }: {
-  contacts: Array<{
-    name: string;
-    address: string;
-    phone: string;
-    verification: string;
-    distanceHint: string;
-    note: string;
-    mapQuery: string;
-  }>;
+  product: Pick<ProductIdea, 'procurementHint' | 'contactHint' | 'offlineContacts'>;
 }) {
   return (
-    <div className="offline-panel">
-      <strong>线下看样/联系点</strong>
+    <details className="offline-panel">
+      <summary className="compact-summary">
+        <strong>线下看样与联系点</strong>
+        <span>{product.offlineContacts.length} 个可查触点，需要时展开</span>
+      </summary>
+      <p className="procurement">{product.procurementHint}</p>
+      <p className="contact">{product.contactHint}</p>
       <div className="offline-grid">
-        {contacts.map((contact) => (
+        {product.offlineContacts.map((contact) => (
           <article className="offline-card" key={`${contact.name}-${contact.address}`}>
             <div className="offline-title-row">
               <h4>{contact.name}</h4>
@@ -450,7 +442,7 @@ function OfflineContactList({
           </article>
         ))}
       </div>
-    </div>
+    </details>
   );
 }
 
@@ -544,11 +536,15 @@ function QualityDecisionPanel({
         : '适合新店先测，重点核实数量和包装。';
 
   return (
-    <details className="quality-decision" open>
-      <summary>
-        <strong>质量判断建议</strong>
+    <details className="quality-decision">
+      <summary className="compact-summary">
+        <strong>质量测试与验货建议</strong>
         <span>{categoryLabels[product.category]} · {advice}</span>
       </summary>
+      <div className="quality-grid">
+        <QualityBlock title="质量好坏看" items={product.qualityChecklist.slice(0, 4)} />
+        <QualityBlock title="避坑信号" items={product.avoidSignals.slice(0, 3)} warning />
+      </div>
       <div className="quality-quick">
         <ul>
           {mustCheck.map((item) => (

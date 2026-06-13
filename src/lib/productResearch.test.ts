@@ -85,6 +85,14 @@ describe('product research model', () => {
     expect(feedback).toContain('售后风险');
   });
 
+  it('changes feedback copy by seller strategy', () => {
+    const product = productIdeas.find((item) => item.id === 'no-drill-hooks')!;
+
+    expect(buildFeedback(product, 1200, 2, 'starter').join('')).toContain('新手测款');
+    expect(buildFeedback(product, 1200, 2, 'steady').join('')).toContain('稳健铺货');
+    expect(buildFeedback(product, 1200, 2, 'margin').join('')).toContain('利润优先');
+  });
+
   it('builds four closed-loop modules for every product', () => {
     for (const product of productIdeas) {
       const loop = buildClosedLoopStatus(product);

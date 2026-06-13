@@ -1257,9 +1257,22 @@ export function filterProducts(
   });
 }
 
-export function buildFeedback(product: ProductIdea, budget: number, riskTolerance: number): string[] {
+export function buildFeedback(
+  product: ProductIdea,
+  budget: number,
+  riskTolerance: number,
+  mode: SellerMode = 'starter',
+): string[] {
   const feedback: string[] = [];
-  const score = scoreProduct(product).score;
+  const score = scoreProduct(product, mode).score;
+
+  if (mode === 'starter') {
+    feedback.push('当前按新手测款排序：优先低售后、易质检、轻物流，适合先跑标题和评价。');
+  } else if (mode === 'steady') {
+    feedback.push('当前按稳健铺货排序：优先需求稳定、货源近、可持续补货的 SKU。');
+  } else {
+    feedback.push('当前按利润优先排序：优先毛利空间和差异化，但要额外压住售后风险。');
+  }
 
   if (score >= 78) {
     feedback.push('建议进入首批测款池：供应链、拼多多低价心智和履约难度匹配度高。');

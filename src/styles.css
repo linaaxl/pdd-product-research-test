@@ -313,6 +313,31 @@ h3 {
   font-weight: 800;
 }
 
+.mode-summary {
+  display: grid;
+  gap: 3px;
+  border: 1px solid #dbe3ee;
+  border-radius: 8px;
+  background: #fbfdff;
+  padding: 10px 11px;
+}
+
+.mode-summary strong {
+  color: #0f172a;
+  font-size: 14px;
+}
+
+.mode-summary span,
+.mode-summary small {
+  color: #475569;
+  line-height: 1.35;
+}
+
+.mode-summary small {
+  color: #64748b;
+  font-size: 12px;
+}
+
 .search-box input {
   width: 100%;
   border: 1px solid #b9c6d6;

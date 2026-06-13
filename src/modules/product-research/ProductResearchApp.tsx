@@ -24,6 +24,24 @@ const modeLabels: Record<SellerMode, string> = {
   margin: '利润优先',
 };
 
+const modeProfiles: Record<SellerMode, { title: string; description: string; focus: string }> = {
+  starter: {
+    title: '低风险起量',
+    description: '优先轻小件、低客诉、容易现场验货的 SKU。',
+    focus: '看物流难度、质检难度、售后风险',
+  },
+  steady: {
+    title: '稳定补货',
+    description: '优先需求稳定、供应链近、价格波动小的 SKU。',
+    focus: '看需求、货源匹配、持续补货',
+  },
+  margin: {
+    title: '利润空间',
+    description: '优先可做差异化包装、套装和溢价的 SKU。',
+    focus: '看毛利潜力、差异化、风险兜底',
+  },
+};
+
 const questionBank = [
   {
     id: 'risk',
@@ -92,7 +110,8 @@ export default function ProductResearchApp() {
   );
   const launchBudget = estimateLaunchBudget(selectedProducts);
   const topProduct = rankedProducts[0]?.product ?? productIdeas[0];
-  const topFeedback = buildFeedback(topProduct, budget, riskTolerance);
+  const topFeedback = buildFeedback(topProduct, budget, riskTolerance, mode);
+  const activeModeProfile = modeProfiles[mode];
   const dashboardStats = useMemo(
     () => [
       { label: '候选 SKU', value: `${rankedProducts.length}`, hint: '可按品类和关键词继续缩小' },
@@ -193,6 +212,11 @@ export default function ProductResearchApp() {
               </button>
             ))}
           </div>
+          <div className="mode-summary">
+            <strong>{activeModeProfile.title}</strong>
+            <span>{activeModeProfile.description}</span>
+            <small>{activeModeProfile.focus}</small>
+          </div>
         </div>
 
         <label className="slider-row">
@@ -249,7 +273,7 @@ export default function ProductResearchApp() {
 
       <section className="dashboard-grid">
         <aside className="insight-panel">
-          <p className="eyebrow">今日首推</p>
+          <p className="eyebrow">今日首推 · {modeLabels[mode]}</p>
           <h2>{topProduct.name}</h2>
           <ScoreMeter score={scoreProduct(topProduct, mode).score} />
           <div className="feedback-list">

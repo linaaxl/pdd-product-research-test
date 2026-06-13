@@ -93,6 +93,23 @@ export default function ProductResearchApp() {
   const launchBudget = estimateLaunchBudget(selectedProducts);
   const topProduct = rankedProducts[0]?.product ?? productIdeas[0];
   const topFeedback = buildFeedback(topProduct, budget, riskTolerance);
+  const dashboardStats = useMemo(
+    () => [
+      { label: '候选 SKU', value: `${rankedProducts.length}`, hint: '可按品类和关键词继续缩小' },
+      { label: '覆盖品类', value: `${Object.keys(categoryLabels).length}`, hint: '家居、灯饰、五金、服饰等' },
+      {
+        label: '低售后风险',
+        value: `${rankedProducts.filter(({ product }) => product.afterSalesRisk <= riskTolerance).length}`,
+        hint: `当前容忍度 ${riskTolerance}/5`,
+      },
+      {
+        label: '线下触点',
+        value: `${rankedProducts.reduce((total, { product }) => total + product.offlineContacts.length, 0)}`,
+        hint: '地址、电话、地图搜索入口',
+      },
+    ],
+    [rankedProducts, riskTolerance],
+  );
 
   const toggleSelected = (id: string) => {
     setSelectedIds((current) =>
@@ -109,8 +126,24 @@ export default function ProductResearchApp() {
           <p className="lead">
             当前中心点：{sourcingCenter}。每个 SKU 都提供拼多多售卖搜索、1688 货源搜索、线下采购点、地址、联系电话或核验状态。
           </p>
+          <div className="hero-actions">
+            <a href="#product-list">查看选品清单</a>
+            <a href="https://mms.pinduoduo.com/" target="_blank" rel="noreferrer">
+              打开拼多多商家后台
+            </a>
+          </div>
         </div>
         <SupplyMap />
+      </section>
+
+      <section className="ops-summary" aria-label="卖家测试概览">
+        {dashboardStats.map((item) => (
+          <div className="ops-card" key={item.label}>
+            <span>{item.label}</span>
+            <strong>{item.value}</strong>
+            <small>{item.hint}</small>
+          </div>
+        ))}
       </section>
 
       <section className="control-panel" aria-label="选品控制台">
@@ -231,7 +264,7 @@ export default function ProductResearchApp() {
           </div>
         </aside>
 
-        <section className="product-table" aria-label="选品列表">
+        <section className="product-table" id="product-list" aria-label="选品列表">
           <div className="section-heading">
             <div>
               <p className="eyebrow">选品建议</p>
@@ -243,13 +276,19 @@ export default function ProductResearchApp() {
           <div className="cards-grid">
             {rankedProducts.map(({ product, score }) => (
               <article className="product-card" key={product.id}>
-                <div className="card-topline">
-                  <span>{categoryLabels[product.category]}</span>
-                  <strong>{score.score}</strong>
+                <div className="product-card-header">
+                  <div className="product-card-title">
+                    <div className="card-topline">
+                      <span>{categoryLabels[product.category]}</span>
+                    </div>
+                    <h3>{product.name}</h3>
+                    <p>{product.audience}</p>
+                  </div>
+                  <div className="score-stack">
+                    <strong>{score.score}</strong>
+                    <span>{score.label}</span>
+                  </div>
                 </div>
-                <h3>{product.name}</h3>
-                <p>{product.audience}</p>
-                <div className={`score-label label-${score.label}`}>{score.label}</div>
                 <dl>
                   <div>
                     <dt>货源带</dt>

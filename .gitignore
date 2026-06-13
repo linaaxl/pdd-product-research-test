@@ -1,0 +1,14 @@
+node_modules/
+dist/
+coverage/
+
+*.log
+*.err.log
+
+.env
+.env.*
+!.env.example
+
+.vercel/
+.DS_Store
+Thumbs.db

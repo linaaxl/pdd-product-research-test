@@ -40,7 +40,7 @@ const modeProfiles: Record<SellerMode, { title: string; description: string; foc
 };
 
 export default function ProductResearchApp() {
-  const [category, setCategory] = useState<CategoryFilter>('ai-gadget');
+  const [category, setCategory] = useState<CategoryFilter>('all');
   const [mode, setMode] = useState<SellerMode>('starter');
   const [searchText, setSearchText] = useState('');
   const [selectedIds, setSelectedIds] = useState<string[]>(['no-drill-hooks', 'motion-night-light']);
@@ -142,7 +142,7 @@ export default function ProductResearchApp() {
         <div className="cards-grid focus-cards-grid">
           {rankedProducts.map(({ product, score }) => (
             <article className="product-card focus-product-card" key={product.id}>
-              <ProductVisual product={product} />
+              <ProductImageReferences product={product} />
 
               <div className="product-card-main">
                 <div className="product-card-header">
@@ -204,30 +204,32 @@ export default function ProductResearchApp() {
   );
 }
 
-function ProductVisual({ product }: { product: ProductIdea }) {
-  const visualClass =
-    product.id === 'ongo-like-ai-desk-lamp'
-      ? 'visual-lamp'
-      : product.id === 'ai-desktop-pet-robot'
-        ? 'visual-robot'
-        : product.id === 'ai-plush-voice-charm'
-          ? 'visual-plush'
-          : product.id === 'ai-study-story-companion'
-            ? 'visual-study'
-            : product.id === 'ai-ambient-speaker-lamp'
-              ? 'visual-speaker'
-              : product.category === 'lighting'
-                ? 'visual-lighting'
-                : product.category === 'hardware'
-                  ? 'visual-hardware'
-                  : 'visual-goods';
+function ProductImageReferences({ product }: { product: ProductIdea }) {
+  const taobaoUrl = `https://s.taobao.com/search?q=${encodeURIComponent(product.pddQuery)}`;
+  const imageSearchUrl = `https://image.baidu.com/search/index?tn=baiduimage&word=${encodeURIComponent(product.pddQuery)}`;
 
   return (
-    <div className={`product-visual ${visualClass}`} aria-hidden="true">
-      <div className="visual-object">
-        <span />
-        <i />
-        <b />
+    <div className="image-reference-panel">
+      <div className="image-reference-heading">
+        <span>真实图参考</span>
+        <strong>2-3 张为主</strong>
+      </div>
+      <div className="image-reference-grid">
+        <a href={pddSearchUrl(product.pddQuery)} target="_blank" rel="noreferrer">
+          <span>图 1</span>
+          <strong>拼多多售卖图</strong>
+          <small>看主图、短视频、买家图</small>
+        </a>
+        <a href={wholesaleSearchUrl(product.procurementQuery)} target="_blank" rel="noreferrer">
+          <span>图 2</span>
+          <strong>1688 工厂图</strong>
+          <small>看白底图、细节图、包装图</small>
+        </a>
+        <a href={product.category === 'ai-gadget' ? taobaoUrl : imageSearchUrl} target="_blank" rel="noreferrer">
+          <span>图 3</span>
+          <strong>{product.category === 'ai-gadget' ? '淘宝场景图' : '全网场景图'}</strong>
+          <small>看桌搭、使用场景、同款风格</small>
+        </a>
       </div>
     </div>
   );

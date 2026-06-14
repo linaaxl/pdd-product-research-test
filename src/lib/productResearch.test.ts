@@ -75,12 +75,16 @@ describe('product research model', () => {
     ).toBe(true);
   });
 
-  it('shows up to six offline contacts sorted by Henglan-nearby distance first', () => {
+  it('shows at least six offline sampling points when available and keeps distance ordering', () => {
     for (const product of productIdeas) {
       const contacts = selectOfflineContactsForDisplay(product.offlineContacts);
 
       expect(contacts.length).toBeGreaterThan(0);
-      expect(contacts.length).toBeLessThanOrEqual(6);
+      if (product.offlineContacts.length >= 6) {
+        expect(contacts.length).toBeGreaterThanOrEqual(6);
+      } else {
+        expect(contacts).toHaveLength(product.offlineContacts.length);
+      }
       expect([...contacts].sort((a, b) => a.distanceKm - b.distanceKm).map((contact) => contact.name)).toEqual(
         contacts.map((contact) => contact.name),
       );
@@ -90,14 +94,15 @@ describe('product research model', () => {
     const aiLampContacts = selectOfflineContactsForDisplay(aiLamp.offlineContacts);
 
     expect(aiLampContacts[0].distanceLabel).toContain('横栏');
-    expect(aiLampContacts.some((contact) => contact.address.includes('深圳'))).toBe(false);
+    expect(aiLampContacts.some((contact) => contact.address.includes('深圳'))).toBe(true);
   });
 
-  it('falls back to expanded sourcing regions when no Zhongshan-nearby contact exists', () => {
+  it('does not pad products with unrelated offline points when fewer than six are credible', () => {
     const aiModule = productIdeas.find((product) => product.id === 'ai-plush-voice-charm')!;
     const contacts = selectOfflineContactsForDisplay(aiModule.offlineContacts);
 
-    expect(contacts.every((contact) => !contact.isNearby)).toBe(true);
+    expect(contacts).toHaveLength(aiModule.offlineContacts.length);
+    expect(contacts.length).toBeLessThan(6);
     expect(contacts.some((contact) => contact.address.includes('深圳') || contact.address.includes('汕头'))).toBe(true);
   });
 

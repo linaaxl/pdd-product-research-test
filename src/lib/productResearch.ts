@@ -244,6 +244,27 @@ const hardwareContacts: OfflineContact[] = [
     mapQuery: '中山市小榄镇 轻工五金 工厂',
     lastChecked: '2026-06-13',
   },
+  {
+    name: '小榄五金标准件/螺丝档口带',
+    address: '中山市小榄五金机电商贸城及东生路周边',
+    phone: '以地图商家页为准',
+    verification: '地图页复核',
+    distanceHint: '适合与小榄五金机电商贸城同路线看样',
+    note: '适合螺丝包、膨胀管、合页、拉手、挂架配件等低客单五金小件拿样。',
+    mapQuery: '中山小榄 五金 螺丝 标准件 批发',
+    sourceUrl: 'https://www.53shop.com/SrcShow_pf.asp?Src_ID=26915',
+    lastChecked: '2026-06-14',
+  },
+  {
+    name: '小榄电器五金批发档口带',
+    address: '中山市小榄镇东生中路、东生路五金商圈周边',
+    phone: '以地图商家页为准',
+    verification: '地图页复核',
+    distanceHint: '小榄五金商圈补充点，适合逐档口比价',
+    note: '适合工具、管件、门窗五金、厨卫挂件等样品对比，先地图确认营业状态。',
+    mapQuery: '中山小榄 电器五金 批发部',
+    lastChecked: '2026-06-14',
+  },
 ];
 
 const applianceContacts: OfflineContact[] = [
@@ -265,6 +286,49 @@ const applianceContacts: OfflineContact[] = [
     note: '不是批发档口，适合核验家电产业带资源和寻找合规厂家线索。',
     mapQuery: '中山市家用电器行业协会',
   },
+  {
+    name: '南头小家电工厂带',
+    address: '中山市南头镇南头大道、同济路、升辉北工业区周边',
+    phone: '无统一电话',
+    verification: '无统一电话',
+    distanceHint: '东凤/南头同属中山北部家电带，适合连线看厂',
+    note: '适合找电热饭盒、厨房小电、桌面小电和电机装配厂，必须核验 3C 与质检资料。',
+    mapQuery: '中山南头 小家电 工厂 批发',
+    sourceUrl: 'https://www.zsjdxh.org/h-col-130.html',
+    lastChecked: '2026-06-14',
+  },
+  {
+    name: '黄圃家电产业/会展采样点',
+    address: '中山市黄圃镇家电产业带及黄圃国际会展中心',
+    phone: '15338403082 / 400-I09-8896',
+    verification: '公开资料可核验',
+    distanceHint: '用于集中看参展样品和家电厂家名录',
+    note: '适合在家电交易会或展商名录里筛选小风扇、厨房小电、个护小电供应商。',
+    mapQuery: '中山 黄圃 家电展 小家电',
+    sourceUrl: 'https://www.caefair.com/',
+    lastChecked: '2026-06-14',
+  },
+  {
+    name: '东凤同安大道小电器装配带',
+    address: '中山市东凤镇同安大道、东阜路、东海路周边',
+    phone: '无统一电话',
+    verification: '无统一电话',
+    distanceHint: '东凤镇内补充采样带，适合多厂比价',
+    note: '适合 USB 风扇、充电小电器、厨房定时器、电机小件等样品筛选。',
+    mapQuery: '中山东凤 同安大道 小电器 工厂',
+    lastChecked: '2026-06-14',
+  },
+  {
+    name: '南头家电创新中心线索',
+    address: '中山市南头镇南头大道中59号周边',
+    phone: '0760-22519221',
+    verification: '公开资料可核验',
+    distanceHint: '用于找合规厂家与检测认证线索',
+    note: '不是普通档口，适合核验小家电供应商资质、检测认证和产业资源。',
+    mapQuery: '中山南头 家电创新中心 小家电',
+    sourceUrl: 'https://www.zsgsl.com/zzjg/tthy?memberId=396021261533268&mid=371654399303749',
+    lastChecked: '2026-06-14',
+  },
 ];
 
 const apparelContacts: OfflineContact[] = [
@@ -285,6 +349,50 @@ const apparelContacts: OfflineContact[] = [
     distanceHint: '茂意雅苑到沙溪，适合补充小商品和服装货源',
     note: '中山市较大的小商品/服装专业市场，适合做服装和日用小件对比。',
     mapQuery: '中山龙瑞国际服装城',
+  },
+  {
+    name: '云汉商贸服装批发市场',
+    address: '中山市沙溪镇云汉村富港路周边',
+    phone: '以地图商家页为准',
+    verification: '地图页复核',
+    distanceHint: '沙溪服装线同路线，适合看尾货、辅料和休闲服档口',
+    note: '适合基础服装、服饰辅料、尾货和档口款拿样，需逐档口核尺码和面料。',
+    mapQuery: '中山云汉商贸服装批发市场',
+    sourceUrl: 'https://m.shichang.hznzcn.com/fuzhuang/565.html',
+    lastChecked: '2026-06-14',
+  },
+  {
+    name: '云汉布匹市场及周边',
+    address: '中山市沙溪镇云汉村布匹市场周边',
+    phone: '以地图商家页为准',
+    verification: '地图页复核',
+    distanceHint: '适合与云汉服装批发市场同路线看样',
+    note: '适合看面料、辅料、尾货原材料和服装配件，服装成品需再找档口或工厂确认。',
+    mapQuery: '中山沙溪 云汉布匹市场',
+    sourceUrl: 'https://www.fumuyu.com/toutiao/info-1-36477.html',
+    lastChecked: '2026-06-14',
+  },
+  {
+    name: '沙溪隆兴工业区服装尾货厂带',
+    address: '中山市沙溪镇隆兴工业区',
+    phone: '无统一电话',
+    verification: '无统一电话',
+    distanceHint: '沙溪服装工厂补充带，适合看厂家尾货',
+    note: '适合找休闲服、T 恤、防晒衣和尾货清仓样品，注意断码、色差和库存年份。',
+    mapQuery: '中山沙溪 隆兴工业区 服装尾货',
+    sourceUrl: 'https://www.fumuyu.com/toutiao/info-1-36477.html',
+    lastChecked: '2026-06-14',
+  },
+  {
+    name: '沙溪龙瑞村服装档口带',
+    address: '中山市沙溪镇龙瑞村、富华总站 105 国道侧周边',
+    phone: '以地图商家页为准',
+    verification: '地图页复核',
+    distanceHint: '龙瑞国际服装城外延档口，适合补充看款',
+    note: '适合看女装、童装、牛仔、内衣裤和箱包鞋业档口，必须复核货源稳定性。',
+    mapQuery: '中山沙溪 龙瑞村 服装批发',
+    sourceUrl: 'https://www.zs.gov.cn/shxz/zjsx/sxjd/content/post_1282102.html',
+    lastChecked: '2026-06-14',
   },
 ];
 
@@ -326,6 +434,28 @@ const dailyContacts: OfflineContact[] = [
     note: '适合找包装、袜帽、小百货、服装配件和宠物清洁小件，需逐档口核价。',
     mapQuery: '中山沙溪 云汉 小商品 批发',
     lastChecked: '2026-06-13',
+  },
+  {
+    name: '云汉商贸服装批发市场小商品/辅料区',
+    address: '中山市沙溪镇云汉村富港路周边',
+    phone: '以地图商家页为准',
+    verification: '地图页复核',
+    distanceHint: '可与龙瑞国际服装城同路线看样',
+    note: '适合包装袋、袜帽、服装配件、收纳小件和小百货档口采样。',
+    mapQuery: '中山云汉商贸服装批发市场 小商品 辅料',
+    sourceUrl: 'https://m.shichang.hznzcn.com/fuzhuang/565.html',
+    lastChecked: '2026-06-14',
+  },
+  {
+    name: '中山小榄/东升包装印刷厂带',
+    address: '中山市小榄镇、东升片区包装印刷厂周边',
+    phone: '以地图商家页为准',
+    verification: '地图页复核',
+    distanceHint: '适合包装耗材、标签纸、快递袋类本地比价',
+    note: '适合电商耗材、本地包装、标签纸和纸箱拿样，需核验厚度、数量和印刷资质。',
+    mapQuery: '中山 小榄 东升 包装印刷 快递袋 标签纸',
+    sourceUrl: 'https://www.zs.gov.cn/xlz/gggs/content/post_2494230.html',
+    lastChecked: '2026-06-14',
   },
 ];
 
@@ -370,6 +500,27 @@ const aiGadgetContacts: OfflineContact[] = [
     distanceHint: '全国扩展货源，适合 AI 毛绒、语音玩具、桌面宠物和教育玩具',
     note: '适合找低成本互动玩具和外观件；重点验语音质量、电池安全和儿童玩具合规。',
     mapQuery: '汕头 澄海 AI玩具 智能玩具 工厂',
+    lastChecked: '2026-06-14',
+  },
+  {
+    name: '瑞丰/环球灯配智能灯具配件采样点',
+    address: '中山市古镇镇灯配城、灯饰配件商圈',
+    phone: '0760-22350233 / 0760-89909999',
+    verification: '公开资料可核验',
+    distanceHint: '适合补充互动台灯的灯臂、灯头、电源、灯珠和外壳件',
+    note: '适合 Ongo 类台灯先拆成结构件和灯效件看样，再外采语音/舵机模块组合。',
+    mapQuery: '中山古镇 智能灯具 配件 灯配城',
+    sourceUrl: 'https://www.denggle.com/',
+    lastChecked: '2026-06-14',
+  },
+  {
+    name: '深圳赛格/华强电子模块采样点',
+    address: '深圳市福田区华强北赛格广场及周边电子市场',
+    phone: '以地图商家页为准',
+    verification: '地图页复核',
+    distanceHint: '全国扩展货源，适合找语音板、蓝牙音频、舵机、电池保护板',
+    note: '适合补齐 AI 交互硬件模块，不建议绕过安全测试直接组装销售。',
+    mapQuery: '深圳赛格 华强北 语音模块 舵机 蓝牙音频',
     lastChecked: '2026-06-14',
   },
 ];
@@ -460,7 +611,7 @@ export const productIdeas: ProductIdea[] = [
     procurementQuery: 'AI桌面宠物机器人 语音互动机器人 批发',
     procurementHint: '优先找有现成公模和固件的桌面机器人，先测“表情屏 + 语音互动 + 触摸反馈”版本。',
     contactHint: '深圳看主板和语音方案，澄海看玩具外壳和量产能力；中山只适合补包装和灯效件。',
-    offlineContacts: aiGadgetContacts.slice(1),
+    offlineContacts: aiGadgetContacts,
     reasons: ['Eilik/LOOI/Rux 类桌面机器人说明桌面陪伴有话题性', '拼多多适合做低门槛礼品款和桌搭款', '可用外观、表情、灯效做差异化主图'],
     qualityChecklist: ['语音识别延迟', '屏幕表情显示', '触摸反馈', '续航和充电保护', '跌落后外壳开裂'],
     avoidSignals: ['宣传“真正 AI”但只能固定录音', 'App 无法下载或注册', '差评集中在死机和充不进电'],
@@ -485,7 +636,7 @@ export const productIdeas: ProductIdea[] = [
     procurementQuery: 'AI语音毛绒挂件 智能玩具 批发 澄海',
     procurementHint: '比桌面机器人更适合拼多多低价测试，可先做“录音复读/语音问答/灯效”低配款。',
     contactHint: '线下优先看澄海玩具和深圳语音模块，确认毛绒安全、模块固定和电池仓结构。',
-    offlineContacts: [aiGadgetContacts[2], aiGadgetContacts[3]],
+    offlineContacts: aiGadgetContacts.slice(2),
     reasons: ['比完整机器人更轻、更便宜、更适合礼品冲动购', 'AI 话术可做“情绪陪伴/会聊天”卖点', '退货风险低于复杂机械结构'],
     qualityChecklist: ['毛绒掉毛和异味', '语音清晰度', '电池仓安全', '挂扣牢固度', '模块固定不硌手'],
     avoidSignals: ['儿童玩具无安全标识', '电池仓易打开', '语音内容不可控或侵权'],
@@ -535,7 +686,7 @@ export const productIdeas: ProductIdea[] = [
     procurementQuery: '智能氛围灯 蓝牙音箱 语音控制 批发',
     procurementHint: '优先做“灯效 + 音箱 + 简单语音/APP控制”版本，避免复杂机器人结构。',
     contactHint: '中山灯饰可看外观灯效，深圳补蓝牙音频和控制板，东凤看小电器装配能力。',
-    offlineContacts: aiGadgetContacts.slice(0, 3),
+    offlineContacts: aiGadgetContacts,
     reasons: ['比机器人更容易量产和售后', '灯效视频适合短视频主图', '可用礼品、宿舍、桌搭场景做组合卖点'],
     qualityChecklist: ['蓝牙连接稳定', '灯效色差', '音质破音', '连续播放发热', '充电保护'],
     avoidSignals: ['无音频认证资料', '灯效和实物色差大', '差评集中在断连和杂音'],
@@ -910,7 +1061,7 @@ export const productIdeas: ProductIdea[] = [
     procurementQuery: '广东 露营挂钩 地钉 营地灯 批发',
     procurementHint: '优先做非承重安全风险较低的小件组合，灯类仍需检查电池和防水。',
     contactHint: '五金件看小榄，灯类看横栏/古镇，布袋类线上比价。',
-    offlineContacts: [...hardwareContacts.slice(0, 2), ...lightingContacts.slice(0, 2)],
+    offlineContacts: [...hardwareContacts.slice(0, 3), ...lightingContacts.slice(0, 3)],
     reasons: ['户外场景清晰', '可跨灯饰和五金供应链组合', '套装差异化空间大'],
     qualityChecklist: ['承重', '防锈', '灯具续航', '布袋缝线', '包装清单'],
     avoidSignals: ['地钉弯曲', '灯具进水', '数量漏发'],
@@ -1083,7 +1234,7 @@ function scoreOfflineContactDistance(contact: OfflineContact): Omit<OfflineConta
 
 export function selectOfflineContactsForDisplay(
   contacts: OfflineContact[],
-  limit = 6,
+  limit = Number.POSITIVE_INFINITY,
 ): OfflineContactDisplay[] {
   const rankedContacts = contacts
     .map((contact, index) => ({
@@ -1093,10 +1244,7 @@ export function selectOfflineContactsForDisplay(
     }))
     .sort((a, b) => a.distanceKm - b.distanceKm || a.originalIndex - b.originalIndex);
 
-  const nearbyContacts = rankedContacts.filter((contact) => contact.isNearby);
-  const displayContacts = nearbyContacts.length > 0 ? nearbyContacts : rankedContacts;
-
-  return displayContacts.slice(0, limit).map((contact) => ({
+  return rankedContacts.slice(0, limit).map((contact) => ({
     name: contact.name,
     address: contact.address,
     phone: contact.phone,

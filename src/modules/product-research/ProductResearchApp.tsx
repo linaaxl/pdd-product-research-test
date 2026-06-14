@@ -240,15 +240,16 @@ function ProductImageReferences({ product }: { product: ProductIdea }) {
 }
 
 function OfflineContactsPanel({ product }: { product: ProductIdea }) {
-  const contacts = selectOfflineContactsForDisplay(product.offlineContacts, 6);
+  const contacts = selectOfflineContactsForDisplay(product.offlineContacts);
   const hasNearbyContacts = contacts.some((contact) => contact.isNearby);
+  const contactCountLabel = contacts.length >= 6 ? `${contacts.length} 个采样点` : `仅查到 ${contacts.length} 个采样点`;
 
   return (
     <details className="offline-panel">
       <summary className="compact-summary">
         <strong>线下拿货点与联系方式</strong>
         <span>
-          {contacts.length} 个参考点，{hasNearbyContacts ? '按横栏距离近远排序' : '附近暂无，展示扩展货源'}
+          {contactCountLabel}，{hasNearbyContacts ? '按横栏距离近远排序' : '附近暂无，按实际查到点位展示'}
         </span>
       </summary>
 

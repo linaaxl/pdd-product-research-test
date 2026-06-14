@@ -6,9 +6,11 @@ import {
   buildQualityVerificationGuide,
   categoryLabels,
   filterProducts,
+  mapSearchUrl,
   pddSearchUrl,
   productIdeas,
   scoreProduct,
+  selectOfflineContactsForDisplay,
   sourcingCenter,
   wholesaleSearchUrl,
 } from '../../lib/productResearch';
@@ -238,18 +240,21 @@ function ProductImageReferences({ product }: { product: ProductIdea }) {
 }
 
 function OfflineContactsPanel({ product }: { product: ProductIdea }) {
-  const contacts = product.offlineContacts.slice(0, 4);
+  const contacts = selectOfflineContactsForDisplay(product.offlineContacts, 6);
+  const hasNearbyContacts = contacts.some((contact) => contact.isNearby);
 
   return (
     <details className="offline-panel">
       <summary className="compact-summary">
         <strong>线下拿货点与联系方式</strong>
-        <span>{contacts.length} 个参考点，先电话或地图复核再到场</span>
+        <span>
+          {contacts.length} 个参考点，{hasNearbyContacts ? '按横栏距离近远排序' : '附近暂无，展示扩展货源'}
+        </span>
       </summary>
 
       <div className="offline-grid">
         {contacts.map((contact) => {
-          const mapUrl = `https://map.baidu.com/search/${encodeURIComponent(contact.mapQuery)}`;
+          const mapUrl = mapSearchUrl(contact.mapQuery);
 
           return (
             <section className="offline-card" key={`${product.id}-${contact.name}`}>
@@ -265,6 +270,7 @@ function OfflineContactsPanel({ product }: { product: ProductIdea }) {
                 <b>电话：</b>
                 {contact.phone}
               </p>
+              <small>{contact.distanceLabel}</small>
               <small>{contact.distanceHint}</small>
               <em>{contact.note}</em>
               <a href={mapUrl} target="_blank" rel="noreferrer">

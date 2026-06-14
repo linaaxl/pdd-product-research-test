@@ -106,6 +106,12 @@ export interface ProductIdea {
   testUnits: number;
 }
 
+export interface OfflineContactDisplay extends OfflineContact {
+  distanceKm: number;
+  distanceLabel: string;
+  isNearby: boolean;
+}
+
 export interface ProductScore {
   score: number;
   label: '优先上架' | '小批测试' | '谨慎跟卖' | '暂缓';
@@ -1039,6 +1045,71 @@ export function wholesaleSearchUrl(query: string): string {
 
 export function mapSearchUrl(query: string): string {
   return `https://uri.amap.com/search?keyword=${encodeURIComponent(query)}&city=中山市&src=agent_ppt`;
+}
+
+const contactDistanceRules: Array<{ keywords: string[]; km: number; label: string; nearby: boolean }> = [
+  { keywords: ['茂意雅苑', '横栏'], km: 3, label: '横栏附近，约 0-5 km', nearby: true },
+  { keywords: ['古镇', '瑞丰灯配城', '环球灯配城', '星光联盟', '灯都时代', '曹三'], km: 9, label: '古镇灯饰商圈，约 8-15 km', nearby: true },
+  { keywords: ['小榄'], km: 18, label: '小榄五金商圈，约 15-25 km', nearby: true },
+  { keywords: ['沙溪', '龙瑞', '云汉'], km: 24, label: '沙溪/云汉商圈，约 20-35 km', nearby: true },
+  { keywords: ['东凤', '南头'], km: 30, label: '东凤/南头家电带，约 25-40 km', nearby: true },
+  { keywords: ['西区'], km: 32, label: '中山西区，约 25-40 km', nearby: true },
+  { keywords: ['中山'], km: 35, label: '中山周边，约 30-50 km', nearby: true },
+  { keywords: ['江门'], km: 45, label: '江门周边，约 40-70 km', nearby: true },
+  { keywords: ['深圳', '华强北'], km: 135, label: '深圳扩展货源，约 120-160 km', nearby: false },
+  { keywords: ['汕头', '澄海'], km: 430, label: '汕头澄海扩展货源，约 400 km+', nearby: false },
+];
+
+function scoreOfflineContactDistance(contact: OfflineContact): Omit<OfflineContactDisplay, keyof OfflineContact> {
+  const searchable = `${contact.name} ${contact.address} ${contact.distanceHint} ${contact.mapQuery}`;
+  const matchedRule = contactDistanceRules.find((rule) =>
+    rule.keywords.some((keyword) => searchable.includes(keyword)),
+  );
+
+  if (matchedRule) {
+    return {
+      distanceKm: matchedRule.km,
+      distanceLabel: matchedRule.label,
+      isNearby: matchedRule.nearby,
+    };
+  }
+
+  return {
+    distanceKm: 999,
+    distanceLabel: '扩展货源，需先地图复核',
+    isNearby: false,
+  };
+}
+
+export function selectOfflineContactsForDisplay(
+  contacts: OfflineContact[],
+  limit = 6,
+): OfflineContactDisplay[] {
+  const rankedContacts = contacts
+    .map((contact, index) => ({
+      ...contact,
+      ...scoreOfflineContactDistance(contact),
+      originalIndex: index,
+    }))
+    .sort((a, b) => a.distanceKm - b.distanceKm || a.originalIndex - b.originalIndex);
+
+  const nearbyContacts = rankedContacts.filter((contact) => contact.isNearby);
+  const displayContacts = nearbyContacts.length > 0 ? nearbyContacts : rankedContacts;
+
+  return displayContacts.slice(0, limit).map((contact) => ({
+    name: contact.name,
+    address: contact.address,
+    phone: contact.phone,
+    verification: contact.verification,
+    distanceHint: contact.distanceHint,
+    note: contact.note,
+    mapQuery: contact.mapQuery,
+    sourceUrl: contact.sourceUrl,
+    lastChecked: contact.lastChecked,
+    distanceKm: contact.distanceKm,
+    distanceLabel: contact.distanceLabel,
+    isNearby: contact.isNearby,
+  }));
 }
 
 export function estimateLaunchBudget(products: ProductIdea[]): number {

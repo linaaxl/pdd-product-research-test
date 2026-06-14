@@ -10,6 +10,7 @@ import {
   pddSearchUrl,
   productIdeas,
   scoreProduct,
+  selectOfflineContactsForDisplay,
   sourcingCenter,
   wholesaleSearchUrl,
 } from './productResearch';
@@ -72,6 +73,32 @@ describe('product research model', () => {
         product.offlineContacts.every((contact) => contact.address && contact.phone),
       ),
     ).toBe(true);
+  });
+
+  it('shows up to six offline contacts sorted by Henglan-nearby distance first', () => {
+    for (const product of productIdeas) {
+      const contacts = selectOfflineContactsForDisplay(product.offlineContacts);
+
+      expect(contacts.length).toBeGreaterThan(0);
+      expect(contacts.length).toBeLessThanOrEqual(6);
+      expect([...contacts].sort((a, b) => a.distanceKm - b.distanceKm).map((contact) => contact.name)).toEqual(
+        contacts.map((contact) => contact.name),
+      );
+    }
+
+    const aiLamp = productIdeas.find((product) => product.id === 'ongo-like-ai-desk-lamp')!;
+    const aiLampContacts = selectOfflineContactsForDisplay(aiLamp.offlineContacts);
+
+    expect(aiLampContacts[0].distanceLabel).toContain('横栏');
+    expect(aiLampContacts.some((contact) => contact.address.includes('深圳'))).toBe(false);
+  });
+
+  it('falls back to expanded sourcing regions when no Zhongshan-nearby contact exists', () => {
+    const aiModule = productIdeas.find((product) => product.id === 'ai-plush-voice-charm')!;
+    const contacts = selectOfflineContactsForDisplay(aiModule.offlineContacts);
+
+    expect(contacts.every((contact) => !contact.isNearby)).toBe(true);
+    expect(contacts.some((contact) => contact.address.includes('深圳') || contact.address.includes('汕头'))).toBe(true);
   });
 
   it('filters by category and keyword', () => {

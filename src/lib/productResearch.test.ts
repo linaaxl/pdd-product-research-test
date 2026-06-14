@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   buildFeedback,
   buildClosedLoopStatus,
+  buildDynamicSelection,
   buildQualityVerificationGuide,
   categoryLabels,
   estimateLaunchBudget,
@@ -43,6 +44,38 @@ describe('product research model', () => {
     expect(categories.has('baby')).toBe(true);
     expect(categories.has('auto')).toBe(true);
     expect(categories.has('packaging')).toBe(true);
+  });
+
+  it('builds a dynamic selection plan from a merchant idea', () => {
+    const result = buildDynamicSelection({
+      idea: '会互动的 AI 台灯',
+      audience: '学生宿舍和桌搭用户',
+      priceBand: 'mid',
+      preferNearby: true,
+      acceptsRemote: true,
+      mode: 'starter',
+    });
+
+    expect(result.suggestedCategory).toBe('ai-gadget');
+    expect(result.matches.length).toBeGreaterThan(0);
+    expect(result.matches[0].product.offlineContacts.length).toBeGreaterThan(0);
+    expect(result.matches[0].matchReasons.join('')).toContain('AI互动硬件');
+    expect(result.nextActions.length).toBeGreaterThanOrEqual(3);
+  });
+
+  it('keeps dynamic selection grounded when the idea has no exact product match', () => {
+    const result = buildDynamicSelection({
+      idea: '宿舍桌面整理小物',
+      audience: '大学生',
+      priceBand: 'low',
+      preferNearby: true,
+      acceptsRemote: false,
+      mode: 'starter',
+    });
+
+    expect(result.matches.length).toBeGreaterThan(0);
+    expect(result.matches.every((match) => match.product.offlineContacts.length > 0)).toBe(true);
+    expect(result.warnings.join('')).toContain('实时电话核验');
   });
 
   it('ranks low-risk home hardware as a strong starter SKU', () => {

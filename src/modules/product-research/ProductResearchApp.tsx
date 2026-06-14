@@ -142,61 +142,94 @@ export default function ProductResearchApp() {
         <div className="cards-grid focus-cards-grid">
           {rankedProducts.map(({ product, score }) => (
             <article className="product-card focus-product-card" key={product.id}>
-              <div className="product-card-header">
-                <div className="product-card-title">
-                  <div className="card-topline">
-                    <span>{categoryLabels[product.category]}</span>
+              <ProductVisual product={product} />
+
+              <div className="product-card-main">
+                <div className="product-card-header">
+                  <div className="product-card-title">
+                    <div className="card-topline">
+                      <span>{categoryLabels[product.category]}</span>
+                    </div>
+                    <h3>{product.name}</h3>
+                    <p>{product.audience}</p>
                   </div>
-                  <h3>{product.name}</h3>
-                  <p>{product.audience}</p>
+                  <div className="score-stack">
+                    <strong>{score.score}</strong>
+                    <span>{score.label}</span>
+                  </div>
                 </div>
-                <div className="score-stack">
-                  <strong>{score.score}</strong>
-                  <span>{score.label}</span>
-                </div>
-              </div>
 
-              <dl className="product-metrics">
-                <div>
-                  <dt>货源带</dt>
-                  <dd>{product.supplyBase}</dd>
-                </div>
-                <div>
-                  <dt>测款量</dt>
-                  <dd>{product.testUnits} 件左右</dd>
-                </div>
-                <div>
-                  <dt>样品预算</dt>
-                  <dd>
-                    {product.sampleCostMin}-{product.sampleCostMax} 元
-                  </dd>
-                </div>
-              </dl>
+                <dl className="product-metrics">
+                  <div>
+                    <dt>货源带</dt>
+                    <dd>{product.supplyBase}</dd>
+                  </div>
+                  <div>
+                    <dt>测款量</dt>
+                    <dd>{product.testUnits} 件左右</dd>
+                  </div>
+                  <div>
+                    <dt>样品预算</dt>
+                    <dd>
+                      {product.sampleCostMin}-{product.sampleCostMax} 元
+                    </dd>
+                  </div>
+                </dl>
 
-              <div className="reason-list">
-                {product.reasons.slice(0, 3).map((reason) => (
-                  <span key={reason}>{reason}</span>
-                ))}
-              </div>
+                <div className="reason-list">
+                  {product.reasons.slice(0, 3).map((reason) => (
+                    <span key={reason}>{reason}</span>
+                  ))}
+                </div>
 
-              <VerificationPanel product={product} />
+                <VerificationPanel product={product} />
 
-              <div className="action-row">
-                <a href={pddSearchUrl(product.pddQuery)} target="_blank" rel="noreferrer">
-                  拼多多比价
-                </a>
-                <a href={wholesaleSearchUrl(product.procurementQuery)} target="_blank" rel="noreferrer">
-                  1688 货源
-                </a>
-                <button type="button" onClick={() => toggleSelected(product.id)}>
-                  {selectedIds.includes(product.id) ? '已加入' : '加入测款'}
-                </button>
+                <div className="action-row">
+                  <a href={pddSearchUrl(product.pddQuery)} target="_blank" rel="noreferrer">
+                    拼多多比价
+                  </a>
+                  <a href={wholesaleSearchUrl(product.procurementQuery)} target="_blank" rel="noreferrer">
+                    1688 货源
+                  </a>
+                  <button type="button" onClick={() => toggleSelected(product.id)}>
+                    {selectedIds.includes(product.id) ? '已加入' : '加入测款'}
+                  </button>
+                </div>
               </div>
             </article>
           ))}
         </div>
       </section>
     </main>
+  );
+}
+
+function ProductVisual({ product }: { product: ProductIdea }) {
+  const visualClass =
+    product.id === 'ongo-like-ai-desk-lamp'
+      ? 'visual-lamp'
+      : product.id === 'ai-desktop-pet-robot'
+        ? 'visual-robot'
+        : product.id === 'ai-plush-voice-charm'
+          ? 'visual-plush'
+          : product.id === 'ai-study-story-companion'
+            ? 'visual-study'
+            : product.id === 'ai-ambient-speaker-lamp'
+              ? 'visual-speaker'
+              : product.category === 'lighting'
+                ? 'visual-lighting'
+                : product.category === 'hardware'
+                  ? 'visual-hardware'
+                  : 'visual-goods';
+
+  return (
+    <div className={`product-visual ${visualClass}`} aria-hidden="true">
+      <div className="visual-object">
+        <span />
+        <i />
+        <b />
+      </div>
+    </div>
   );
 }
 

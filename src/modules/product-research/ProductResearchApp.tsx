@@ -1,11 +1,8 @@
 import { useMemo, useState } from 'react';
 import {
-  DynamicProductMatch,
-  MerchantIdeaInput,
   ProductCategory,
   ProductIdea,
   SellerMode,
-  buildDynamicSelection,
   buildQualityVerificationGuide,
   categoryLabels,
   filterProducts,
@@ -19,7 +16,6 @@ import {
 } from '../../lib/productResearch';
 
 type CategoryFilter = ProductCategory | 'all';
-type FeedbackValue = '有价值' | '不适合' | '已去拿样' | '信息不准';
 
 const modeLabels: Record<SellerMode, string> = {
   starter: '新手测款',
@@ -50,15 +46,6 @@ export default function ProductResearchApp() {
   const [mode, setMode] = useState<SellerMode>('starter');
   const [searchText, setSearchText] = useState('');
   const [selectedIds, setSelectedIds] = useState<string[]>(['no-drill-hooks', 'motion-night-light']);
-  const [ideaInput, setIdeaInput] = useState<MerchantIdeaInput>({
-    idea: '',
-    audience: '',
-    priceBand: 'low',
-    preferNearby: true,
-    acceptsRemote: true,
-    mode: 'starter',
-  });
-  const [feedbackByProduct, setFeedbackByProduct] = useState<Record<string, FeedbackValue>>({});
 
   const rankedProducts = useMemo(() => {
     return filterProducts(productIdeas, category, searchText)
@@ -67,13 +54,6 @@ export default function ProductResearchApp() {
   }, [category, mode, searchText]);
 
   const activeModeProfile = modeProfiles[mode];
-  const dynamicResult = useMemo(() => {
-    const idea = ideaInput.idea.trim();
-
-    if (!idea) return null;
-
-    return buildDynamicSelection({ ...ideaInput, mode });
-  }, [ideaInput, mode]);
 
   const toggleSelected = (id: string) => {
     setSelectedIds((current) =>
@@ -97,115 +77,6 @@ export default function ProductResearchApp() {
           <small>{activeModeProfile.description}</small>
         </div>
       </section>
-
-      <section className="dynamic-builder" aria-label="动态选品生成">
-        <div className="dynamic-builder-copy">
-          <p className="eyebrow">动态测款输入</p>
-          <h2>输入一个商品想法，先生成可验证方案</h2>
-          <p>
-            适合测试商家临时提出“想卖某类东西”的场景。系统会先匹配已有品类、推荐候选 SKU，并同步带出线下拿样点、线上链接和验货建议。
-          </p>
-        </div>
-
-        <div className="idea-form">
-          <label className="search-box">
-            <span>商品想法</span>
-            <textarea
-              value={ideaInput.idea}
-              placeholder="例如：会互动的 AI 台灯、宠物语音挂件、宿舍收纳小夜灯..."
-              onChange={(event) => setIdeaInput((current) => ({ ...current, idea: event.target.value }))}
-            />
-          </label>
-
-          <label className="search-box">
-            <span>目标人群</span>
-            <input
-              value={ideaInput.audience}
-              placeholder="例如：学生宿舍、宝妈、桌搭用户、养宠人群"
-              onChange={(event) => setIdeaInput((current) => ({ ...current, audience: event.target.value }))}
-            />
-          </label>
-
-          <div className="filter-group">
-            <span>价格带</span>
-            <div className="segmented">
-              {[
-                ['low', '低价测款'],
-                ['mid', '中价差异'],
-                ['high', '高毛利'],
-              ].map(([key, label]) => (
-                <button
-                  type="button"
-                  key={key}
-                  className={ideaInput.priceBand === key ? 'active' : ''}
-                  onClick={() =>
-                    setIdeaInput((current) => ({ ...current, priceBand: key as MerchantIdeaInput['priceBand'] }))
-                  }
-                >
-                  {label}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div className="dynamic-toggles">
-            <label>
-              <input
-                type="checkbox"
-                checked={ideaInput.preferNearby}
-                onChange={(event) => setIdeaInput((current) => ({ ...current, preferNearby: event.target.checked }))}
-              />
-              优先中山附近拿样
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                checked={ideaInput.acceptsRemote}
-                onChange={(event) => setIdeaInput((current) => ({ ...current, acceptsRemote: event.target.checked }))}
-              />
-              接受深圳/汕头等扩展货源
-            </label>
-          </div>
-        </div>
-      </section>
-
-      {dynamicResult ? (
-        <section className="dynamic-results" aria-label="动态生成结果">
-          <div className="section-heading">
-            <div>
-              <p className="eyebrow">动态方案 · {dynamicResult.confidence}</p>
-              <h2>{categoryLabels[dynamicResult.suggestedCategory]}方向</h2>
-              <small>输入：{dynamicResult.normalizedIdea}</small>
-            </div>
-            <span>{dynamicResult.matches.length} 个推荐</span>
-          </div>
-
-          <div className="dynamic-advice-grid">
-            <QualityBlock title="下一步" items={dynamicResult.nextActions} />
-            <QualityBlock title="注意" items={dynamicResult.warnings} warning />
-          </div>
-
-          <div className="cards-grid focus-cards-grid">
-            {dynamicResult.matches.map((match) => (
-              <ProductCard
-                key={`dynamic-${match.product.id}`}
-                product={match.product}
-                score={match.score}
-                selected={selectedIds.includes(match.product.id)}
-                onToggleSelected={toggleSelected}
-                insight={match}
-                feedbackValue={feedbackByProduct[match.product.id]}
-                onFeedback={(value) =>
-                  setFeedbackByProduct((current) => ({
-                    ...current,
-                    [match.product.id]: value,
-                  }))
-                }
-              />
-            ))}
-          </div>
-        </section>
-      ) : null}
 
       <section className="focus-toolbar" aria-label="选品筛选">
         <label className="search-box">
@@ -272,124 +143,68 @@ export default function ProductResearchApp() {
 
         <div className="cards-grid focus-cards-grid">
           {rankedProducts.map(({ product, score }) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              score={score}
-              selected={selectedIds.includes(product.id)}
-              onToggleSelected={toggleSelected}
-            />
+            <details className="product-card focus-product-card" key={product.id}>
+              <summary className="product-card-summary">
+                <div className="product-card-header">
+                  <div className="product-card-title">
+                    <div className="card-topline">
+                      <span>{categoryLabels[product.category]}</span>
+                    </div>
+                    <h3>{product.name}</h3>
+                    <p>{product.audience}</p>
+                  </div>
+                  <div className="score-stack">
+                    <strong>{score.score}</strong>
+                    <span>{score.label}</span>
+                  </div>
+                </div>
+              </summary>
+
+              <div className="product-card-main">
+                <dl className="product-metrics">
+                  <div>
+                    <dt>货源带</dt>
+                    <dd>{product.supplyBase}</dd>
+                  </div>
+                  <div>
+                    <dt>测款量</dt>
+                    <dd>{product.testUnits} 件左右</dd>
+                  </div>
+                  <div>
+                    <dt>样品预算</dt>
+                    <dd>
+                      {product.sampleCostMin}-{product.sampleCostMax} 元
+                    </dd>
+                  </div>
+                </dl>
+
+                <div className="reason-list">
+                  {product.reasons.slice(0, 3).map((reason) => (
+                    <span key={reason}>{reason}</span>
+                  ))}
+                </div>
+
+                <ProductImageReferences product={product} />
+                <OfflineContactsPanel product={product} />
+                <VerificationPanel product={product} />
+
+                <div className="action-row">
+                  <a href={pddSearchUrl(product.pddQuery)} target="_blank" rel="noreferrer">
+                    拼多多比价
+                  </a>
+                  <a href={wholesaleSearchUrl(product.procurementQuery)} target="_blank" rel="noreferrer">
+                    1688 货源
+                  </a>
+                  <button type="button" onClick={() => toggleSelected(product.id)}>
+                    {selectedIds.includes(product.id) ? '已加入' : '加入测款'}
+                  </button>
+                </div>
+              </div>
+            </details>
           ))}
         </div>
       </section>
     </main>
-  );
-}
-
-function ProductCard({
-  product,
-  score,
-  selected,
-  onToggleSelected,
-  insight,
-  feedbackValue,
-  onFeedback,
-}: {
-  product: ProductIdea;
-  score: ReturnType<typeof scoreProduct>;
-  selected: boolean;
-  onToggleSelected: (id: string) => void;
-  insight?: DynamicProductMatch;
-  feedbackValue?: FeedbackValue;
-  onFeedback?: (value: FeedbackValue) => void;
-}) {
-  const title = insight ? insight.dynamicTitle : product.name;
-
-  return (
-    <details className="product-card focus-product-card">
-      <summary className="product-card-summary">
-        <div className="product-card-header">
-          <div className="product-card-title">
-            <div className="card-topline">
-              <span>{categoryLabels[product.category]}</span>
-            </div>
-            <h3>{title}</h3>
-            <p>{insight ? insight.dynamicSummary : product.audience}</p>
-          </div>
-          <div className="score-stack">
-            <strong>{score.score}</strong>
-            <span>{score.label}</span>
-          </div>
-        </div>
-      </summary>
-
-      <div className="product-card-main">
-        {insight ? (
-          <div className="dynamic-match-box">
-            <strong>匹配分 {insight.matchScore}</strong>
-            <div className="reason-list">
-              {insight.matchReasons.map((reason) => (
-                <span key={reason}>{reason}</span>
-              ))}
-            </div>
-          </div>
-        ) : null}
-
-        <dl className="product-metrics">
-          <div>
-            <dt>货源带</dt>
-            <dd>{product.supplyBase}</dd>
-          </div>
-          <div>
-            <dt>测款量</dt>
-            <dd>{product.testUnits} 件左右</dd>
-          </div>
-          <div>
-            <dt>样品预算</dt>
-            <dd>
-              {product.sampleCostMin}-{product.sampleCostMax} 元
-            </dd>
-          </div>
-        </dl>
-
-        <div className="reason-list">
-          {product.reasons.slice(0, 3).map((reason) => (
-            <span key={reason}>{reason}</span>
-          ))}
-        </div>
-
-        <ProductImageReferences product={product} />
-        <OfflineContactsPanel product={product} />
-        <VerificationPanel product={product} />
-
-        {onFeedback ? (
-          <div className="feedback-actions">
-            {(['有价值', '不适合', '已去拿样', '信息不准'] as FeedbackValue[]).map((value) => (
-              <button
-                type="button"
-                key={value}
-                className={feedbackValue === value ? 'active' : ''}
-                onClick={() => onFeedback(value)}
-              >
-                {value}
-              </button>
-            ))}
-          </div>
-        ) : null}
-
-        <div className="action-row">
-          <a href={pddSearchUrl(product.pddQuery)} target="_blank" rel="noreferrer">
-            拼多多比价
-          </a>
-          <a href={wholesaleSearchUrl(product.procurementQuery)} target="_blank" rel="noreferrer">
-            1688 货源
-          </a>
-          <button type="button" onClick={() => onToggleSelected(product.id)}>
-            {selected ? '已加入' : '加入测款'}
-          </button>
-        </div>
-      </div>
-    </details>
   );
 }
 

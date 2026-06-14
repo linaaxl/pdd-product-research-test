@@ -1024,114 +1024,6 @@ dd {
   font-size: 22px;
 }
 
-.dynamic-builder,
-.dynamic-results {
-  margin-top: 12px;
-  border: 1px solid #d8e0ea;
-  border-radius: 8px;
-  background: #ffffff;
-  padding: 16px;
-}
-
-.dynamic-builder {
-  display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.25fr);
-  gap: 16px;
-  align-items: start;
-}
-
-.dynamic-builder-copy p {
-  margin-bottom: 0;
-  color: #475569;
-  line-height: 1.55;
-}
-
-.idea-form {
-  display: grid;
-  gap: 12px;
-}
-
-.search-box textarea {
-  width: 100%;
-  min-height: 86px;
-  resize: vertical;
-  border: 1px solid #b9c6d6;
-  border-radius: 8px;
-  padding: 10px 12px;
-}
-
-.search-box textarea:focus {
-  border-color: #2563eb;
-  outline: none;
-}
-
-.dynamic-toggles {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 8px;
-}
-
-.dynamic-toggles label {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  border: 1px solid #dbe3ee;
-  border-radius: 8px;
-  background: #f8fafc;
-  color: #334155;
-  font-weight: 800;
-  padding: 10px;
-}
-
-.dynamic-toggles input {
-  accent-color: #2563eb;
-}
-
-.dynamic-results {
-  display: grid;
-  gap: 12px;
-}
-
-.dynamic-advice-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
-}
-
-.dynamic-match-box {
-  display: grid;
-  gap: 9px;
-  border: 1px solid #bfdbfe;
-  border-radius: 8px;
-  background: #eff6ff;
-  padding: 11px;
-}
-
-.dynamic-match-box > strong {
-  color: #1d4ed8;
-}
-
-.feedback-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  border: 1px solid #dbe3ee;
-  border-radius: 8px;
-  background: #fbfdff;
-  padding: 10px;
-}
-
-.feedback-actions button {
-  flex: 1 1 92px;
-  font-weight: 800;
-}
-
-.feedback-actions button.active {
-  border-color: #2563eb;
-  background: #eff6ff;
-  color: #1d4ed8;
-}
-
 .focus-toolbar {
   position: sticky;
   z-index: 5;
@@ -1419,8 +1311,6 @@ dd {
   .control-panel,
   .coverage-panel,
   .dashboard-grid,
-  .dynamic-builder,
-  .dynamic-advice-grid,
   .product-hero,
   .focus-toolbar,
   .cards-grid,
@@ -1494,15 +1384,6 @@ dd {
 
   .focus-toolbar {
     position: static;
-  }
-
-  .dynamic-builder,
-  .dynamic-results {
-    padding: 13px;
-  }
-
-  .dynamic-toggles {
-    grid-template-columns: 1fr;
   }
 
   .focus-product-card {

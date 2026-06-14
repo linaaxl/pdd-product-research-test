@@ -141,10 +141,8 @@ export default function ProductResearchApp() {
 
         <div className="cards-grid focus-cards-grid">
           {rankedProducts.map(({ product, score }) => (
-            <article className="product-card focus-product-card" key={product.id}>
-              <ProductImageReferences product={product} />
-
-              <div className="product-card-main">
+            <details className="product-card focus-product-card" key={product.id}>
+              <summary className="product-card-summary">
                 <div className="product-card-header">
                   <div className="product-card-title">
                     <div className="card-topline">
@@ -158,7 +156,9 @@ export default function ProductResearchApp() {
                     <span>{score.label}</span>
                   </div>
                 </div>
+              </summary>
 
+              <div className="product-card-main">
                 <dl className="product-metrics">
                   <div>
                     <dt>货源带</dt>
@@ -182,6 +182,8 @@ export default function ProductResearchApp() {
                   ))}
                 </div>
 
+                <ProductImageReferences product={product} />
+                <OfflineContactsPanel product={product} />
                 <VerificationPanel product={product} />
 
                 <div className="action-row">
@@ -196,7 +198,7 @@ export default function ProductResearchApp() {
                   </button>
                 </div>
               </div>
-            </article>
+            </details>
           ))}
         </div>
       </section>
@@ -209,11 +211,11 @@ function ProductImageReferences({ product }: { product: ProductIdea }) {
   const imageSearchUrl = `https://image.baidu.com/search/index?tn=baiduimage&word=${encodeURIComponent(product.pddQuery)}`;
 
   return (
-    <div className="image-reference-panel">
-      <div className="image-reference-heading">
-        <span>真实图参考</span>
-        <strong>2-3 张为主</strong>
-      </div>
+    <details className="image-reference-panel">
+      <summary className="image-reference-heading">
+        <strong>真实图参考</strong>
+        <span>2-3 张为主</span>
+      </summary>
       <div className="image-reference-grid">
         <a href={pddSearchUrl(product.pddQuery)} target="_blank" rel="noreferrer">
           <span>图 1</span>
@@ -231,7 +233,48 @@ function ProductImageReferences({ product }: { product: ProductIdea }) {
           <small>看桌搭、使用场景、同款风格</small>
         </a>
       </div>
-    </div>
+    </details>
+  );
+}
+
+function OfflineContactsPanel({ product }: { product: ProductIdea }) {
+  const contacts = product.offlineContacts.slice(0, 4);
+
+  return (
+    <details className="offline-panel">
+      <summary className="compact-summary">
+        <strong>线下拿货点与联系方式</strong>
+        <span>{contacts.length} 个参考点，先电话或地图复核再到场</span>
+      </summary>
+
+      <div className="offline-grid">
+        {contacts.map((contact) => {
+          const mapUrl = `https://map.baidu.com/search/${encodeURIComponent(contact.mapQuery)}`;
+
+          return (
+            <section className="offline-card" key={`${product.id}-${contact.name}`}>
+              <div className="offline-title-row">
+                <h4>{contact.name}</h4>
+                <span>{contact.verification}</span>
+              </div>
+              <p>
+                <b>地址：</b>
+                {contact.address}
+              </p>
+              <p>
+                <b>电话：</b>
+                {contact.phone}
+              </p>
+              <small>{contact.distanceHint}</small>
+              <em>{contact.note}</em>
+              <a href={mapUrl} target="_blank" rel="noreferrer">
+                地图搜索
+              </a>
+            </section>
+          );
+        })}
+      </div>
+    </details>
   );
 }
 

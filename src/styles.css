@@ -1108,18 +1108,65 @@ dd {
 }
 
 .focus-product-card {
-  display: grid;
-  grid-template-columns: 240px minmax(0, 1fr);
-  gap: 13px;
-  align-items: start;
+  display: block;
   border-color: #d8e0ea;
   box-shadow: 0 10px 24px rgb(42 64 101 / 7%);
+}
+
+.product-card-summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  cursor: pointer;
+  list-style: none;
+}
+
+.product-card-summary::marker,
+.image-reference-heading::marker,
+.compact-summary::marker,
+.verification-panel summary::marker {
+  content: "";
+}
+
+.product-card-summary::-webkit-details-marker,
+.image-reference-heading::-webkit-details-marker,
+.compact-summary::-webkit-details-marker,
+.verification-panel summary::-webkit-details-marker {
+  display: none;
+}
+
+.product-card-summary::after,
+.image-reference-heading::after,
+.compact-summary::after,
+.verification-panel summary::after {
+  content: "展开";
+  align-self: start;
+  width: fit-content;
+  border-radius: 999px;
+  background: #eef2ff;
+  color: #1d4ed8;
+  font-size: 12px;
+  font-weight: 900;
+  padding: 4px 9px;
+}
+
+.focus-product-card[open] > .product-card-summary::after,
+.image-reference-panel[open] > .image-reference-heading::after,
+.offline-panel[open] > .compact-summary::after,
+.verification-panel[open] > summary::after {
+  content: "收起";
+  background: #f1f5f9;
+  color: #475569;
 }
 
 .product-card-main {
   display: grid;
   gap: 13px;
   min-width: 0;
+  margin-top: 13px;
+  border-top: 1px solid #edf2f7;
+  padding-top: 13px;
 }
 
 .focus-product-card .product-card-header {
@@ -1140,8 +1187,6 @@ dd {
 }
 
 .image-reference-panel {
-  position: sticky;
-  top: 92px;
   display: grid;
   gap: 12px;
   width: 100%;
@@ -1152,10 +1197,12 @@ dd {
 }
 
 .image-reference-heading {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
   gap: 8px;
   align-items: center;
   justify-content: space-between;
+  cursor: pointer;
 }
 
 .image-reference-heading span {
@@ -1171,6 +1218,7 @@ dd {
 
 .image-reference-grid {
   display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 9px;
 }
 
@@ -1219,16 +1267,20 @@ dd {
 
 .verification-panel summary {
   display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
   gap: 4px;
+  align-items: center;
   cursor: pointer;
   padding: 12px;
 }
 
 .verification-panel summary strong {
+  grid-column: 1;
   color: #166534;
 }
 
 .verification-panel summary span {
+  grid-column: 1;
   color: #475569;
   line-height: 1.4;
 }
@@ -1339,9 +1391,19 @@ dd {
     padding: 13px;
   }
 
+  .product-card-summary,
+  .image-reference-heading,
+  .verification-panel summary {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
   .image-reference-panel {
     position: relative;
     top: auto;
+  }
+
+  .image-reference-grid {
+    grid-template-columns: 1fr;
   }
 
   .category-filter .chip-row {

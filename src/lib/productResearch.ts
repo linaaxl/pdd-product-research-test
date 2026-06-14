@@ -16,7 +16,8 @@ export type ProductCategory =
   | 'auto'
   | 'packaging'
   | 'party'
-  | 'sports';
+  | 'sports'
+  | 'ai-gadget';
 
 export type SellerMode = 'starter' | 'steady' | 'margin';
 
@@ -131,6 +132,7 @@ export const categoryLabels: Record<ProductCategory, string> = {
   packaging: '包装耗材',
   party: '节庆派对',
   sports: '运动健身',
+  'ai-gadget': 'AI互动硬件',
 };
 
 const lightingContacts: OfflineContact[] = [
@@ -321,6 +323,51 @@ const dailyContacts: OfflineContact[] = [
   },
 ];
 
+const aiGadgetContacts: OfflineContact[] = [
+  {
+    name: '中山横栏/古镇智能灯饰改款带',
+    address: '中山市横栏镇、古镇镇灯饰及灯配商圈',
+    phone: '无统一电话',
+    verification: '无统一电话',
+    distanceHint: '茂意雅苑周边优先看灯具结构、灯臂、外壳、灯珠和电源方案',
+    note: '适合找 Ongo 类互动台灯的外观、灯臂、灯头、感应灯控基础件；AI 模块可外采后组装验证。',
+    mapQuery: '中山 古镇 横栏 智能台灯 工厂',
+    sourceUrl: 'https://www.zs.gov.cn/gzz/gzgk/gzjj/index.html',
+    lastChecked: '2026-06-14',
+  },
+  {
+    name: '东凤/南头小家电智能硬件带',
+    address: '中山市东凤镇、南头镇小家电产业带',
+    phone: '无统一电话',
+    verification: '无统一电话',
+    distanceHint: '适合从中山跨镇找带主板、充电、电池和小电器经验的供应商',
+    note: '适合 AI 氛围灯音箱、桌面小电器外壳、语音控制小硬件，必须核验电池和合规资料。',
+    mapQuery: '中山 东凤 智能小家电 工厂',
+    sourceUrl: 'https://www.zs.gov.cn/zwgk/zdxm/xmjj/content/post_2160301.html',
+    lastChecked: '2026-06-14',
+  },
+  {
+    name: '深圳华强北智能硬件/电子模块市场',
+    address: '深圳市福田区华强北路及周边电子市场',
+    phone: '以地图商家页为准',
+    verification: '地图页复核',
+    distanceHint: '全国扩展货源，适合找 AI 语音模块、摄像头、舵机、开发板和成品小机器人',
+    note: '适合验证 AI 交互模块和小批样机，不建议未质检直接大批量铺货。',
+    mapQuery: '深圳 华强北 AI语音模块 桌面机器人',
+    lastChecked: '2026-06-14',
+  },
+  {
+    name: '汕头澄海智能玩具/电子玩具产业带',
+    address: '广东省汕头市澄海区玩具产业带',
+    phone: '以地图商家页为准',
+    verification: '地图页复核',
+    distanceHint: '全国扩展货源，适合 AI 毛绒、语音玩具、桌面宠物和教育玩具',
+    note: '适合找低成本互动玩具和外观件；重点验语音质量、电池安全和儿童玩具合规。',
+    mapQuery: '汕头 澄海 AI玩具 智能玩具 工厂',
+    lastChecked: '2026-06-14',
+  },
+];
+
 export const productIdeas: ProductIdea[] = [
   {
     id: 'motion-night-light',
@@ -371,6 +418,131 @@ export const productIdeas: ProductIdea[] = [
     sampleCostMin: 450,
     sampleCostMax: 900,
     testUnits: 20,
+  },
+  {
+    id: 'ongo-like-ai-desk-lamp',
+    name: 'Ongo 类互动机械臂 AI 台灯',
+    category: 'ai-gadget',
+    supplyBase: '中山横栏/古镇灯饰结构件 + 深圳 AI 语音/舵机模块',
+    audience: '桌搭玩家、亲子家庭、礼品用户、内容种草用户',
+    pddQuery: 'AI智能台灯 互动台灯 机械臂台灯 会动台灯',
+    procurementQuery: 'AI互动台灯 机械臂台灯 智能语音台灯 源头厂家',
+    procurementHint: '不要一开始追完整 Ongo 同款，先拆成“可动灯臂 + 语音/触控 + 表情/灯效”的轻交互版本测款。',
+    contactHint: '中山看灯臂、灯头、电源和外观件；深圳补语音模块、舵机和控制板；全国找成熟样机再反向拆成本。',
+    offlineContacts: aiGadgetContacts,
+    reasons: ['Ongo 类“会互动的物件”有强内容传播点', '中山灯饰供应链能承接灯具结构和外观件', '拼多多可先卖低配互动款，不必直接做高价完整机器人'],
+    qualityChecklist: ['灯臂转动寿命', '舵机噪音和卡顿', '语音唤醒稳定性', '连续点亮发热', '跌落后灯头和关节牢固度'],
+    avoidSignals: ['只展示概念视频无实拍', '无舵机寿命和电池参数', '交互依赖国外 App 或不可用云服务'],
+    demandPotential: 5,
+    supplyFit: 4,
+    pddFit: 4,
+    logisticsEase: 3,
+    qualityControlEase: 2,
+    marginPotential: 5,
+    afterSalesRisk: 4,
+    sampleCostMin: 900,
+    sampleCostMax: 1800,
+    testUnits: 10,
+  },
+  {
+    id: 'ai-desktop-pet-robot',
+    name: 'AI 桌面宠物机器人/情绪陪伴摆件',
+    category: 'ai-gadget',
+    supplyBase: '深圳智能硬件、汕头澄海电子玩具、东莞塑胶外壳',
+    audience: '学生、办公室桌搭、二次元礼品、独居陪伴用户',
+    pddQuery: 'AI桌面机器人 桌面宠物 互动机器人',
+    procurementQuery: 'AI桌面宠物机器人 语音互动机器人 批发',
+    procurementHint: '优先找有现成公模和固件的桌面机器人，先测“表情屏 + 语音互动 + 触摸反馈”版本。',
+    contactHint: '深圳看主板和语音方案，澄海看玩具外壳和量产能力；中山只适合补包装和灯效件。',
+    offlineContacts: aiGadgetContacts.slice(1),
+    reasons: ['Eilik/LOOI/Rux 类桌面机器人说明桌面陪伴有话题性', '拼多多适合做低门槛礼品款和桌搭款', '可用外观、表情、灯效做差异化主图'],
+    qualityChecklist: ['语音识别延迟', '屏幕表情显示', '触摸反馈', '续航和充电保护', '跌落后外壳开裂'],
+    avoidSignals: ['宣传“真正 AI”但只能固定录音', 'App 无法下载或注册', '差评集中在死机和充不进电'],
+    demandPotential: 5,
+    supplyFit: 3,
+    pddFit: 4,
+    logisticsEase: 3,
+    qualityControlEase: 2,
+    marginPotential: 5,
+    afterSalesRisk: 4,
+    sampleCostMin: 800,
+    sampleCostMax: 1600,
+    testUnits: 8,
+  },
+  {
+    id: 'ai-plush-voice-charm',
+    name: 'AI 语音毛绒挂件/背包陪伴玩具',
+    category: 'ai-gadget',
+    supplyBase: '汕头澄海智能玩具、深圳语音模块、广州礼品包装',
+    audience: '学生、礼品、情侣、亲子陪伴、IP 周边用户',
+    pddQuery: 'AI语音毛绒玩具 会说话挂件 背包挂件',
+    procurementQuery: 'AI语音毛绒挂件 智能玩具 批发 澄海',
+    procurementHint: '比桌面机器人更适合拼多多低价测试，可先做“录音复读/语音问答/灯效”低配款。',
+    contactHint: '线下优先看澄海玩具和深圳语音模块，确认毛绒安全、模块固定和电池仓结构。',
+    offlineContacts: [aiGadgetContacts[2], aiGadgetContacts[3]],
+    reasons: ['比完整机器人更轻、更便宜、更适合礼品冲动购', 'AI 话术可做“情绪陪伴/会聊天”卖点', '退货风险低于复杂机械结构'],
+    qualityChecklist: ['毛绒掉毛和异味', '语音清晰度', '电池仓安全', '挂扣牢固度', '模块固定不硌手'],
+    avoidSignals: ['儿童玩具无安全标识', '电池仓易打开', '语音内容不可控或侵权'],
+    demandPotential: 4,
+    supplyFit: 4,
+    pddFit: 5,
+    logisticsEase: 5,
+    qualityControlEase: 3,
+    marginPotential: 4,
+    afterSalesRisk: 3,
+    sampleCostMin: 360,
+    sampleCostMax: 900,
+    testUnits: 20,
+  },
+  {
+    id: 'ai-study-story-companion',
+    name: 'AI 问答学习灯/故事机小伴侣',
+    category: 'ai-gadget',
+    supplyBase: '中山智能灯饰、小家电 + 深圳语音方案 + 澄海教育玩具',
+    audience: '小学生家庭、亲子阅读、作业陪伴、礼品用户',
+    pddQuery: 'AI学习机 故事机 台灯 问答陪伴',
+    procurementQuery: 'AI故事机 问答学习灯 智能语音台灯 批发',
+    procurementHint: '不要做教育效果承诺，先做“故事、问答、护眼灯、计时提醒”的轻学习伴侣。',
+    contactHint: '中山看灯和外壳，深圳看语音方案，澄海看故事机成熟供应；上架文案避免夸大学习效果。',
+    offlineContacts: aiGadgetContacts,
+    reasons: ['学习陪伴比纯玩具更容易解释使用场景', '灯具和故事机都能找到成熟供应链', '适合做亲子礼品和作业桌搭'],
+    qualityChecklist: ['语音内容合规', '护眼灯频闪', '音量和音质', '按键误触', '充电和发热'],
+    avoidSignals: ['宣称提分/治疗近视', '内容来源不明', '无儿童使用安全提示'],
+    demandPotential: 4,
+    supplyFit: 4,
+    pddFit: 4,
+    logisticsEase: 3,
+    qualityControlEase: 2,
+    marginPotential: 4,
+    afterSalesRisk: 4,
+    sampleCostMin: 700,
+    sampleCostMax: 1500,
+    testUnits: 10,
+  },
+  {
+    id: 'ai-ambient-speaker-lamp',
+    name: 'AI 氛围灯蓝牙音箱/桌面情绪灯',
+    category: 'ai-gadget',
+    supplyBase: '中山古镇灯饰、深圳蓝牙音频、东凤小家电',
+    audience: '卧室桌搭、直播背景、宿舍、礼品用户',
+    pddQuery: 'AI氛围灯 蓝牙音箱 桌面情绪灯',
+    procurementQuery: '智能氛围灯 蓝牙音箱 语音控制 批发',
+    procurementHint: '优先做“灯效 + 音箱 + 简单语音/APP控制”版本，避免复杂机器人结构。',
+    contactHint: '中山灯饰可看外观灯效，深圳补蓝牙音频和控制板，东凤看小电器装配能力。',
+    offlineContacts: aiGadgetContacts.slice(0, 3),
+    reasons: ['比机器人更容易量产和售后', '灯效视频适合短视频主图', '可用礼品、宿舍、桌搭场景做组合卖点'],
+    qualityChecklist: ['蓝牙连接稳定', '灯效色差', '音质破音', '连续播放发热', '充电保护'],
+    avoidSignals: ['无音频认证资料', '灯效和实物色差大', '差评集中在断连和杂音'],
+    demandPotential: 4,
+    supplyFit: 5,
+    pddFit: 4,
+    logisticsEase: 4,
+    qualityControlEase: 3,
+    marginPotential: 4,
+    afterSalesRisk: 3,
+    sampleCostMin: 500,
+    sampleCostMax: 1200,
+    testUnits: 15,
   },
   {
     id: 'no-drill-hooks',
@@ -1070,6 +1242,13 @@ function getIndustrySource(category: ProductCategory): { name: string; url: stri
       evidence: '用于确认东凤、南头小家电供应链方向',
     };
   }
+  if (category === 'ai-gadget') {
+    return {
+      name: '中山灯饰/小家电 + 深圳智能硬件 + 澄海玩具供应链组合',
+      url: 'https://www.zs.gov.cn/gzz/gzgk/gzjj/index.html',
+      evidence: '用于确认 AI 互动硬件可拆分为灯饰结构、小电器装配、电子模块和玩具外观供应链',
+    };
+  }
   if (category === 'apparel') {
     return {
       name: '中山市沙溪镇政府：服装与电商产业资料',
@@ -1086,6 +1265,7 @@ function getIndustrySource(category: ProductCategory): { name: string; url: stri
 
 function getQualityMethod(category: ProductCategory, checkpoint: string): string {
   if (category === 'lighting') return `现场点亮并连续测试：${checkpoint}`;
+  if (category === 'ai-gadget') return `连续交互测试、充电发热和结构寿命检查：${checkpoint}`;
   if (category === 'small-appliance') return `连续运行 72 小时并检查认证资料：${checkpoint}`;
   if (category === 'apparel') return `抽样水洗、尺码平铺测量、实拍试穿：${checkpoint}`;
   if (category === 'hardware') return `承重、盐雾/防锈、毛刺和配件齐套检查：${checkpoint}`;
@@ -1094,6 +1274,7 @@ function getQualityMethod(category: ProductCategory, checkpoint: string): string
 
 function getQualityStandard(category: ProductCategory, checkpoint: string): string {
   if (checkpoint.includes('发热') || category === 'small-appliance') return '无明显异常发热、无异响、资料齐全';
+  if (category === 'ai-gadget') return '交互稳定、无异常发热、无卡顿死机，儿童/电池安全说明清楚';
   if (checkpoint.includes('尺寸') || category === 'apparel') return '实测与详情页标注误差可接受，尺码表清晰';
   if (category === 'lighting') return '亮度、续航、防水/线材与页面承诺一致';
   if (category === 'hardware') return '无割手毛刺，承重/防锈表现与宣传一致';
@@ -1126,6 +1307,12 @@ function getCategoryQualityRules(category: ProductCategory): QualityVerification
       onlineSteps: ['差评重点搜“发热、充不进电、电池、噪音、坏了、售后”。'],
       antiPitfallRules: ['无合格证、无品牌主体、无售后承诺的小电器不卖。'],
       sampleDecision: ['小电器必须做 72 小时压力测试，退货率可控后再补货。'],
+    },
+    'ai-gadget': {
+      offlineSteps: ['现场连续交互 10 分钟：语音、触摸、灯效/动作是否稳定。', '充电运行后摸外壳和电池仓，检查发热、异响、卡顿和松动。'],
+      onlineSteps: ['差评重点搜“死机、连不上、语音不灵、充不进电、声音小、卡顿”。', '要求供应商发实拍交互视频、说明书、质检资料和售后换新规则。'],
+      antiPitfallRules: ['只讲“AI”但没有可演示功能、依赖不可用 App/云服务、无电池安全说明的不要测。'],
+      sampleDecision: ['先拿 1-3 台样机做 3 天压力测试，再按低配款小批测图和测价。'],
     },
     apparel: {
       offlineSteps: ['摸面料厚薄，看走线和线头；拉扯缝线看是否开线。', '拿样水洗一次，看缩水、掉色和起球。'],

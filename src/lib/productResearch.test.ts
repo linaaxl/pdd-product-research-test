@@ -17,9 +17,19 @@ import {
 describe('product research model', () => {
   it('keeps a broad Zhongshan-nearby product pool', () => {
     expect(productIdeas.length).toBeGreaterThanOrEqual(20);
-    expect(Object.keys(categoryLabels).length).toBeGreaterThanOrEqual(18);
+    expect(Object.keys(categoryLabels).length).toBeGreaterThanOrEqual(19);
     expect(productIdeas.some((product) => product.supplyBase.includes('中山古镇'))).toBe(true);
     expect(productIdeas.some((product) => product.supplyBase.includes('中山小榄'))).toBe(true);
+  });
+
+  it('adds AI embodied gadget references for more interesting PDD tests', () => {
+    const aiProducts = productIdeas.filter((product) => product.category === 'ai-gadget');
+
+    expect(categoryLabels['ai-gadget']).toBe('AI互动硬件');
+    expect(aiProducts.length).toBeGreaterThanOrEqual(5);
+    expect(aiProducts.some((product) => product.id === 'ongo-like-ai-desk-lamp')).toBe(true);
+    expect(aiProducts.every((product) => product.offlineContacts.length > 0)).toBe(true);
+    expect(aiProducts.some((product) => product.supplyBase.includes('深圳'))).toBe(true);
   });
 
   it('covers major small-goods categories beyond the original few', () => {

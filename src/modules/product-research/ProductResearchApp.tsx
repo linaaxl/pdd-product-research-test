@@ -40,7 +40,7 @@ const modeProfiles: Record<SellerMode, { title: string; description: string; foc
 };
 
 export default function ProductResearchApp() {
-  const [category, setCategory] = useState<CategoryFilter>('all');
+  const [category, setCategory] = useState<CategoryFilter>('ai-gadget');
   const [mode, setMode] = useState<SellerMode>('starter');
   const [searchText, setSearchText] = useState('');
   const [selectedIds, setSelectedIds] = useState<string[]>(['no-drill-hooks', 'motion-night-light']);
